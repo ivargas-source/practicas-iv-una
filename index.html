@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prácticas IV, semana 8: preparación de la visita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5EF; --panel:#FFFFFF; --ink:#1C2A22; --muted:#56655B;
+  --green:#1F5C3F; --green-soft:#DCEBDF; --maize:#D9A21B; --maize-soft:#FBEFC9;
+  --soil:#7A5232; --line:#C9D4CB; --bad:#B23A2E; --bad-soft:#F7DEDA; --good:#2D7A4B;
+  --display:"Bricolage Grotesque", "Segoe UI", Arial, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", Arial, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A15; --panel:#1A2620; --ink:#E6EEE8; --muted:#A3B3A8;
+    --green:#6FBF8E; --green-soft:#22382B; --maize:#E8B83A; --maize-soft:#3A3117;
+    --soil:#C99A6E; --line:#2F4237; --bad:#F08A7E; --bad-soft:#3E211D; --good:#7DD39C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A15; --panel:#1A2620; --ink:#E6EEE8; --muted:#A3B3A8;
+  --green:#6FBF8E; --green-soft:#22382B; --maize:#E8B83A; --maize-soft:#3A3117;
+  --soil:#C99A6E; --line:#2F4237; --bad:#F08A7E; --bad-soft:#3E211D; --good:#7DD39C;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:19px;line-height:1.55}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:800}
+h2{font-size:clamp(1.5rem,2.8vw,2.1rem);font-weight:800;color:var(--green)}
+h3{font-size:1.25rem;font-weight:700;margin-top:1.6em}
+p{margin:.4em 0 .9em;max-width:72ch}
+a{color:var(--green)}
+.wrap{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+nav{background:var(--green);color:#fff;padding:24px 14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+nav .brand{font-family:var(--display);font-weight:800;font-size:1.15rem;padding:0 10px 4px}
+nav .sub{font-size:.85rem;opacity:.8;padding:0 10px 18px}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:#fff;font:inherit;font-size:.98rem;padding:10px 12px;border-radius:8px;cursor:pointer;margin-bottom:2px}
+nav button:hover{background:rgba(255,255,255,.12)}
+nav button[aria-selected="true"]{background:#fff;color:#1F5C3F;font-weight:700}
+nav button.case{margin-left:14px;width:calc(100% - 14px);border-left:3px solid var(--maize);border-radius:0 8px 8px 0;font-size:.92rem}
+nav button.case[aria-selected="true"]{background:var(--maize);color:#1C2A22}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) nav{background:#163826} }
+:root[data-theme="dark"] nav{background:#163826}
+main{padding:36px clamp(18px,4vw,56px) 80px;max-width:1080px}
+section[role="tabpanel"]{display:none}
+section[role="tabpanel"].on{display:block}
+.kicker{color:var(--soil);font-weight:700;font-size:.95rem;margin-bottom:.2em}
+.lead{font-size:1.18rem;color:var(--muted);max-width:68ch}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:18px 0}
+.box.case{border-left:6px solid var(--maize);background:var(--maize-soft)}
+.box.idea{border-left:6px solid var(--green)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;background:var(--panel)}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--green-soft);font-weight:700}
+ol,ul{padding-left:1.3em;max-width:72ch}
+li{margin:.3em 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--green-soft);color:var(--green)}
+.btn{font:inherit;font-weight:700;font-size:.95rem;background:var(--green);color:var(--panel);border:0;border-radius:8px;padding:9px 16px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--green);border:2px solid var(--green)}
+.btn:focus-visible, nav button:focus-visible, .chip:focus-visible, summary:focus-visible, input:focus-visible{outline:3px solid var(--maize);outline-offset:2px}
+svg text{font-family:var(--body)}
+.chain{width:100%;height:auto}
+/* checklist */
+.check li{list-style:none;margin-left:-1.3em}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--green)}
+/* sort game */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.chip{font:inherit;font-size:.95rem;border:2px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer}
+.chip[data-state="F"]{border-color:var(--soil);background:#F1E4D8;color:#4A3220}
+.chip[data-state="V"]{border-color:var(--green);background:var(--green-soft);color:var(--green)}
+.chip.ok{box-shadow:0 0 0 3px var(--good)}
+.chip.no{box-shadow:0 0 0 3px var(--bad)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+/* sliders */
+.ctrl{display:grid;grid-template-columns:200px 1fr 90px;gap:10px;align-items:center;margin:8px 0}
+.ctrl input[type=range]{width:100%;accent-color:var(--green)}
+.ctrl output{font-weight:700;text-align:right}
+.result{font-size:1.15rem;font-weight:700;margin:12px 0}
+.result.warn{color:var(--bad)}
+/* questions */
+.qa{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:10px 0;overflow:hidden}
+.qa .bad{padding:12px 16px;background:var(--bad-soft)}
+.qa .good{padding:12px 16px;background:var(--green-soft);display:none}
+.qa.open .good{display:block}
+.qa button{margin:0 16px 12px}
+.qa .why{font-size:.9rem;color:var(--muted);margin-top:4px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 16px}
+summary{cursor:pointer;font-weight:700;padding:12px 0}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+.timer{font-family:var(--display);font-size:clamp(3.5rem,10vw,6.5rem);font-weight:800;color:var(--green);letter-spacing:.02em;margin:6px 0}
+.timer.end{color:var(--bad)}
+.counter{font-weight:700;color:var(--green)}
+.src{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.src div{background:var(--panel);border:1px solid var(--line);border-top:5px solid var(--green);border-radius:10px;padding:14px 16px}
+.src b{font-family:var(--display);font-size:1.1rem;display:block}
+.src span{font-size:.92rem;color:var(--muted)}
+.foot{font-size:.85rem;color:var(--muted);margin-top:8px}
+@media (max-width:860px){
+  body{font-size:17px}
+  .wrap{grid-template-columns:1fr}
+  nav{position:sticky;top:0;height:auto;z-index:5;padding:10px 10px 8px;display:flex;gap:6px;overflow-x:auto;padding-top:calc(10px + env(safe-area-inset-top,0px));align-items:center}
+  nav .brand,nav .sub{display:none}
+  nav button{white-space:nowrap;width:auto;margin:0}
+  nav button.case{margin-left:0;width:auto}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .ctrl{grid-template-columns:1fr 70px}
+  .ctrl label{grid-column:1/-1}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav role="tablist" aria-label="Bloques de la clase">
+  <div class="brand">Prácticas IV, semana 8</div>
+  <div class="sub">Preparación de la visita de campo</div>
+  <button role="tab" data-t="b1" aria-selected="true">Bloque 1. Primer contacto</button>
+  <button role="tab" data-t="b2">Bloque 2. Cadena de valor</button>
+  <button role="tab" data-t="c2" class="case">CASO – EJERCICIOS B2</button>
+  <button role="tab" data-t="b3">Bloque 3. Costos</button>
+  <button role="tab" data-t="c3" class="case">CASO – EJERCICIOS B3</button>
+  <button role="tab" data-t="b4">Bloque 4. Investigar el rubro</button>
+  <button role="tab" data-t="b5">Bloque 5. Entrevista de campo</button>
+  <button role="tab" data-t="b6">Bloque 6. Guía de visita</button>
+  <button role="tab" data-t="b7">Bloque 7. Simulacro</button>
+</nav>
+
+<main>
+
+<!-- ============ BLOQUE 1 ============ -->
+<section role="tabpanel" id="b1" class="on">
+  <div class="kicker">Bloque 1 · 40 minutos</div>
+  <h1>Hoy empieza la relación con su empresa</h1>
+  <p class="lead">La primera impresión la da un mensaje de WhatsApp. Un mensaje claro y formal hace que la empresa responda rápido y los reciba con confianza.</p>
+
+  <h3>Lo que su mensaje debe incluir</h3>
+  <div class="box">
+    <ul class="check" id="msgcheck">
+      <li><label><input type="checkbox"> Saludo y presentación breve de cada integrante: nombre y carrera.</label></li>
+      <li><label><input type="checkbox"> Agradecimiento por aceptar recibirlos.</label></li>
+      <li><label><input type="checkbox"> Dos o tres opciones de fecha y hora para la visita.</label></li>
+      <li><label><input type="checkbox"> Pregunta sobre quiénes podrían atenderlos: dueño, producción, ventas.</label></li>
+      <li><label><input type="checkbox"> Solicitud de permiso para tomar fotos durante la visita.</label></li>
+    </ul>
+    <p class="counter" id="msgcount">0 de 5 elementos</p>
+  </div>
+
+  <h3>Ejemplo de mensaje</h3>
+  <div class="box idea">
+    <p>Buenos días, don Martín. Somos estudiantes de cuarto año de Agronegocios de la UNA: Ana López, Carlos Ruiz y María Torres. Muchas gracias por recibirnos.</p>
+    <p>Nos gustaría coordinar la visita a su beneficio. ¿Le quedaría bien el martes 13 a las 9:00 a.m., el miércoles 14 a las 2:00 p.m. o el jueves 15 a las 9:00 a.m.?</p>
+    <p>También quisiéramos saber si podríamos conversar con la persona encargada de producción y con quien maneja las ventas. Y, si usted lo permite, tomar algunas fotos del proceso.</p>
+    <p>Quedamos atentos. ¡Feliz día!</p>
+  </div>
+
+  <h3>Cuide el tono</h3>
+  <div class="scroll"><table>
+    <tr><th>Evitar</th><th>Mejor</th></tr>
+    <tr><td>"Hola, ¿cuándo podemos ir?"</td><td>Proponer fechas concretas: la empresa solo tiene que elegir.</td></tr>
+    <tr><td>Escribir a las 10 de la noche o en domingo.</td><td>Escribir en horario laboral, de lunes a sábado.</td></tr>
+    <tr><td>Audios largos o stickers.</td><td>Texto corto, formal y con buena ortografía.</td></tr>
+    <tr><td>Cinco integrantes escribiendo a la vez.</td><td>Una sola persona del equipo coordina por el grupo.</td></tr>
+    <tr><td>Prometer apoyos o compras.</td><td>Explicar que es un trabajo académico y que recibirán un informe con propuestas.</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ BLOQUE 2 ============ -->
+<section role="tabpanel" id="b2">
+  <div class="kicker">Bloque 2 · Refrescamiento</div>
+  <h1>Cadena de valor agroindustrial</h1>
+  <p class="lead">Una cadena de valor es el recorrido de un producto desde el insumo hasta el consumidor. En cada paso alguien hace un trabajo y el producto vale más.</p>
+
+  <h3>Los eslabones</h3>
+  <div class="box scroll">
+    <svg class="chain" viewBox="0 0 980 250" role="img" aria-label="Diagrama de eslabones de la cadena de valor con actores de apoyo">
+      <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g style="color:var(--muted)" font-size="15" text-anchor="middle">
+        <g id="links"></g>
+      </g>
+      <rect x="10" y="175" width="960" height="60" rx="10" fill="var(--maize-soft)" stroke="var(--maize)"/>
+      <text x="490" y="200" text-anchor="middle" font-weight="700" fill="var(--ink)" font-size="16">Actores de apoyo</text>
+      <text x="490" y="222" text-anchor="middle" fill="var(--ink)" font-size="15">financiamiento · transporte · asistencia técnica · proveedores de empaque · instituciones reguladoras</text>
+    </svg>
+  </div>
+
+  <div class="grid2">
+    <div class="box idea"><b>Actores directos</b><p>Son dueños del producto en algún momento: lo compran, lo transforman o lo venden. Ejemplo en café: productor, beneficio, exportador, tostador.</p></div>
+    <div class="box idea"><b>Actores de apoyo</b><p>No son dueños del producto, pero la cadena no funciona sin ellos. Ejemplo: la cooperativa que da crédito, el transportista, el laboratorio que certifica.</p></div>
+  </div>
+
+  <h3>Valor agregado: ¿dónde se queda el dinero?</h3>
+  <p>El valor agregado de un eslabón es su precio de venta menos lo que pagó por el producto. Ejemplo ilustrativo con una libra de café nicaragüense, en dólares:</p>
+  <div class="box">
+    <svg id="vachart" viewBox="0 0 900 330" class="chain" role="img" aria-label="Gráfico de precio y valor agregado por eslabón del café"></svg>
+    <div class="legend"><span><i class="sw" style="background:var(--line)"></i>Lo que pagó al eslabón anterior</span><span><i class="sw" style="background:var(--green)"></i>Valor agregado en ese eslabón</span></div>
+    <p class="foot">Números ilustrativos para explicar el concepto. Una libra de café oro rinde unas 50 tazas.</p>
+  </div>
+  <p><b>Pregunta para el grupo:</b> ¿por qué la mayor parte del valor se queda lejos del productor? ¿Qué podría hacer un productor para quedarse con una parte mayor?</p>
+
+  <h3>Producción propia o maquila</h3>
+  <p>Es lo primero que hay que preguntar en la visita, porque cambia toda la cadena. Ejemplo con una trilladora de arroz:</p>
+  <div class="grid2">
+    <div class="box"><span class="tag">Producción propia</span><p>La trilladora compra el arroz en granza al productor, lo trilla, lo empaca con su marca y lo vende. Gana con la diferencia de precio y asume el riesgo de mercado.</p></div>
+    <div class="box"><span class="tag">Maquila (servicio)</span><p>El productor trae su arroz y paga por quintal trillado. La trilladora nunca es dueña del arroz: gana por el servicio y no le importa el precio del arroz en el mercado.</p></div>
+  </div>
+  <p>Muchas empresas hacen las dos cosas. Por eso hay que preguntar qué parte de su negocio es cada una.</p>
+
+  <h3>Merma y subproducto no son lo mismo</h3>
+  <div class="scroll"><table>
+    <tr><th>Rubro</th><th>Merma (se pierde)</th><th>Subproducto (sale del proceso y tiene valor)</th></tr>
+    <tr><td>Café</td><td>Granos dañados por broca que se descartan</td><td>Pulpa y cascarilla vendidas o usadas como abono</td></tr>
+    <tr><td>Arroz</td><td>Grano perdido en el traslado y la limpieza</td><td>Cascarilla para combustible o cama de pollo; grano quebrado (puntilla) que se vende</td></tr>
+    <tr><td>Mango deshidratado</td><td>Fruta golpeada que no entra a proceso</td><td>Cáscara y semilla para abono o alimento animal</td></tr>
+    <tr><td>Cacao</td><td>Granos mal fermentados</td><td>Cáscara para té o abono</td></tr>
+  </table></div>
+
+  <h3>Cuello de botella: la etapa más lenta manda</h3>
+  <p>Una línea de producción solo puede ir tan rápido como su etapa más lenta. Muevan las capacidades de esta pequeña fábrica de rosquillas y vean qué pasa:</p>
+  <div class="box">
+    <div id="bneck"></div>
+    <svg id="bnchart" viewBox="0 0 900 200" class="chain" role="img" aria-label="Capacidad por etapa"></svg>
+    <p class="result" id="bnres"></p>
+  </div>
+  <p><b>Para pensar:</b> si compran otra amasadora, ¿producen más? ¿Dónde conviene invertir primero?</p>
+</section>
+
+<!-- ============ CASO B2 ============ -->
+<section role="tabpanel" id="c2">
+  <div class="kicker">Caso · Ejercicios del Bloque 2 · 65 minutos</div>
+  <h1>Lácteos El Roble</h1>
+  <div class="box case">
+    <p>Lácteos El Roble es una pequeña quesera en Boaco. Compra 300 litros de leche al día a 8 productores de la zona a C$15 por litro y la recoge con su propia camioneta. Con 10 litros de leche obtiene 1 kg de queso fresco, unas 66 libras al día. Trabaja 26 días al mes con 2 operarios.</p>
+    <p>Vende el 70 % del queso a un distribuidor que lo lleva a mercados de Managua y el 30 % en su propia tienda. El suero que sobra, unos 270 litros al día, lo vende a un porcicultor vecino. Cada día se pierden unas 2 libras de queso que se agria por falta de refrigeración en la camioneta.</p>
+    <p class="foot">Caso ficticio. Los números son ilustrativos.</p>
+  </div>
+
+  <h3>Ejercicios</h3>
+  <ol>
+    <li>Dibujen la cadena de El Roble con todos sus eslabones y actores, directos y de apoyo.</li>
+    <li>Calculen el valor agregado por la quesera por libra vendida al distribuidor, si el distribuidor le paga C$90 por libra.</li>
+    <li>Identifiquen una merma, un subproducto y un cuello de botella.</li>
+    <li>Propongan una mejora para la cadena y digan a qué eslabón beneficia.</li>
+    <li>Escriban 5 preguntas que necesitarían hacerle a El Roble para completar el mapa, porque el caso no las responde.</li>
+  </ol>
+
+  <h3>Orientaciones</h3>
+  <div class="box idea">
+    <ul>
+      <li>Trabajen en papelógrafo: la cadena va de izquierda a derecha y los actores de apoyo abajo, como en el diagrama del bloque.</li>
+      <li>En el ejercicio 2, piensen cuánta leche hace falta para una libra de queso y cuánto cuesta esa leche. Muestren el cálculo, no solo el resultado.</li>
+      <li>Para el cuello de botella, busquen la etapa que limita o pone en riesgo todo lo demás. Puede no ser una máquina.</li>
+      <li>La mejora debe ser concreta y realista para una quesera pequeña.</li>
+      <li>Las 5 preguntas de cierre se llevan a su guía de visita: son el tipo de preguntas que harán a su empresa.</li>
+      <li>Al final, dos equipos presentan en 5 minutos y el resto compara.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ BLOQUE 3 ============ -->
+<section role="tabpanel" id="b3">
+  <div class="kicker">Bloque 3 · Refrescamiento</div>
+  <h1>Costos y punto de equilibrio</h1>
+  <p class="lead">Para saber si un negocio gana dinero hay que separar lo que cuesta producir cada unidad de lo que se paga aunque no se produzca nada.</p>
+
+  <div class="grid2">
+    <div class="box idea"><span class="tag">Costos variables</span><p>Suben o bajan con la cantidad producida. Si no se produce, no se pagan. Ejemplo: materia prima, empaque, gas para el horno.</p></div>
+    <div class="box idea"><span class="tag">Costos fijos</span><p>Se pagan igual aunque ese mes no se produzca nada. Ejemplo: alquiler, salario de la administradora, depreciación de los equipos.</p></div>
+  </div>
+
+  <h3>Ejercicio rápido: ¿fijo o variable?</h3>
+  <p>Una microempresa de chips de plátano tiene estos costos. Toquen cada uno para clasificarlo: un toque es fijo, dos es variable. Luego revisen.</p>
+  <div class="box">
+    <div class="chips" id="chips"></div>
+    <div class="legend"><span><i class="sw" style="background:#F1E4D8;border:2px solid var(--soil)"></i>Fijo</span><span><i class="sw" style="background:var(--green-soft);border:2px solid var(--green)"></i>Variable</span></div>
+    <p style="margin-top:14px"><button class="btn" id="chk">Revisar</button> <button class="btn ghost" id="rst">Empezar de nuevo</button></p>
+    <p class="result" id="chipres"></p>
+  </div>
+  <p><b>Ojo con la mano de obra:</b> si los operarios ganan por día trabajado o por destajo, se comporta como variable. Si tienen salario mensual fijo, es fija. Siempre hay que preguntar cómo se paga.</p>
+
+  <h3>Depreciación: el equipo también es un costo</h3>
+  <p>Un equipo se desgasta con los años. La depreciación lineal reparte su costo entre los años que dura.</p>
+  <div class="box idea">
+    <p style="font-size:1.25rem;font-weight:700;margin:0">Depreciación anual = valor del equipo ÷ años de vida útil</p>
+    <p>Ejemplo: una freidora industrial de C$24,000 que dura 4 años se deprecia C$6,000 al año, o C$500 al mes. Esos C$500 son un costo fijo mensual, aunque no salga dinero de la caja.</p>
+  </div>
+
+  <h3>Margen de contribución y punto de equilibrio</h3>
+  <div class="grid2">
+    <div class="box"><b>Margen de contribución por unidad</b><p>Precio de venta − costo variable por unidad. Es lo que cada unidad vendida deja para pagar los costos fijos.</p></div>
+    <div class="box"><b>Punto de equilibrio en unidades</b><p>Costos fijos ÷ margen de contribución por unidad. Es cuántas unidades hay que vender al mes para no ganar ni perder.</p></div>
+  </div>
+
+  <h3>Juguemos con los números</h3>
+  <p>Chips de plátano en bolsa de 150 g. Muevan los controles y vean cómo cambia el punto de equilibrio.</p>
+  <div class="box">
+    <div class="ctrl"><label for="pF">Costos fijos al mes (C$)</label><input id="pF" type="range" min="4000" max="30000" step="500" value="12000"><output id="oF"></output></div>
+    <div class="ctrl"><label for="pP">Precio por bolsa (C$)</label><input id="pP" type="range" min="15" max="70" step="1" value="40"><output id="oP"></output></div>
+    <div class="ctrl"><label for="pV">Costo variable por bolsa (C$)</label><input id="pV" type="range" min="5" max="60" step="1" value="22"><output id="oV"></output></div>
+    <svg id="pechart" viewBox="0 0 900 380" class="chain" role="img" aria-label="Gráfico de punto de equilibrio"></svg>
+    <div class="legend"><span><i class="sw" style="background:var(--green)"></i>Ingresos</span><span><i class="sw" style="background:var(--soil)"></i>Costos totales</span><span><i class="sw" style="background:var(--maize)"></i>Punto de equilibrio</span></div>
+    <p class="result" id="peres"></p>
+  </div>
+  <p><b>Preguntas para el grupo:</b> ¿qué pasa si el precio baja hasta igualar el costo variable? ¿Qué es más fácil para esta empresa: subir el precio o bajar los costos fijos?</p>
+</section>
+
+<!-- ============ CASO B3 ============ -->
+<section role="tabpanel" id="c3">
+  <div class="kicker">Caso · Ejercicios del Bloque 3 · 65 minutos</div>
+  <h1>Lácteos El Roble: costos</h1>
+  <div class="box case scroll">
+    <table>
+      <tr><th>Concepto</th><th>Dato</th></tr>
+      <tr><td>Leche</td><td>300 L al día a C$15 por litro</td></tr>
+      <tr><td>Cuajo y sal</td><td>C$150 al día</td></tr>
+      <tr><td>Empaque</td><td>C$100 al día</td></tr>
+      <tr><td>Mano de obra</td><td>2 operarios a C$300 por día cada uno</td></tr>
+      <tr><td>Producción</td><td>66 lb de queso al día, 26 días al mes</td></tr>
+      <tr><td>Precio al distribuidor</td><td>C$90 por libra</td></tr>
+      <tr><td>Suero</td><td>270 L al día a C$1 por litro</td></tr>
+      <tr><td>Alquiler</td><td>C$3,000 al mes</td></tr>
+      <tr><td>Energía</td><td>C$2,500 al mes</td></tr>
+      <tr><td>Agua</td><td>C$500 al mes</td></tr>
+      <tr><td>Mantenimiento</td><td>C$1,000 al mes</td></tr>
+      <tr><td>Tina de acero</td><td>C$40,000, vida útil 10 años</td></tr>
+      <tr><td>Prensa</td><td>C$15,000, vida útil 5 años</td></tr>
+      <tr><td>Refrigerador</td><td>C$30,000, vida útil 8 años</td></tr>
+    </table>
+  </div>
+
+  <h3>Ejercicios</h3>
+  <p>Supongan que todo el queso se vende al distribuidor.</p>
+  <ol>
+    <li>Clasifiquen cada costo como fijo o variable.</li>
+    <li>Calculen el costo variable por libra de queso.</li>
+    <li>Calculen la depreciación mensual de los equipos y el total de costos fijos al mes.</li>
+    <li>Calculen el margen de contribución por libra.</li>
+    <li>Calculen el punto de equilibrio en libras al mes. ¿La quesera lo alcanza con su producción actual?</li>
+    <li>Repitan el cálculo sumando la venta de suero. ¿Qué tanto cambia el resultado?</li>
+    <li>¿Qué tablas de la guía de visita necesitarían para hacer este cálculo con su empresa?</li>
+  </ol>
+
+  <h3>Orientaciones</h3>
+  <div class="box idea">
+    <ul>
+      <li>Trabajen en una hoja de cálculo o en papel, pero muestren cada paso con su fórmula y sus unidades (C$ por día, C$ por mes, C$ por libra).</li>
+      <li>Pasen todo a la misma unidad de tiempo antes de sumar. Un error común es mezclar costos diarios con mensuales.</li>
+      <li>Para la mano de obra, decidan si es fija o variable y escriban por qué.</li>
+      <li>En el ejercicio 6, piensen cuánto suero sale por cada libra de queso y cuánto dinero representa.</li>
+      <li>Si les sobra tiempo: ¿qué pasa con el resultado si se descuentan las 2 libras que se agrian cada día?</li>
+      <li>Al final se comparan resultados entre equipos. Si no coinciden, busquen dónde está la diferencia.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ BLOQUE 4 ============ -->
+<section role="tabpanel" id="b4">
+  <div class="kicker">Bloque 4 · 50 minutos</div>
+  <h1>Investigar el rubro antes de la visita</h1>
+  <p class="lead">Todavía no conocen su empresa, pero sí su rubro. Llegar sabiendo cómo funciona el sector les permite hacer mejores preguntas y que la empresa los tome en serio.</p>
+
+  <h3>Dónde buscar</h3>
+  <div class="src">
+    <div><b>CETREX</b><span>Estadísticas de exportación de Nicaragua por producto y destino.</span></div>
+    <div><b>Banco Central de Nicaragua</b><span>Comercio exterior, precios e indicadores económicos.</span></div>
+    <div><b>Trade Map (ITC)</b><span>Exportaciones e importaciones por código arancelario y país, de varios años.</span></div>
+    <div><b>SIECA</b><span>Comercio y aranceles dentro de Centroamérica.</span></div>
+    <div><b>MAG e INIDE</b><span>Producción agropecuaria, precios y datos de población para estimar mercados.</span></div>
+    <div><b>MINSA e IPSA</b><span>Requisitos sanitarios y de inocuidad para alimentos y productos agropecuarios.</span></div>
+    <div><b>Supermercados y redes</b><span>Precios actuales, presentaciones y marcas de la competencia.</span></div>
+  </div>
+
+  <h3>Cómo encontrar el código arancelario</h3>
+  <p>El código arancelario (Sistema Armonizado) identifica cada producto en el comercio internacional. Con él se buscan las estadísticas en Trade Map o CETREX.</p>
+  <div class="box">
+    <div class="scroll"><table>
+      <tr><th>Producto</th><th>Código (6 dígitos)</th><th>Cómo se lee</th></tr>
+      <tr><td>Café verde sin tostar</td><td>0901.11</td><td>Capítulo 09: café, té y especias</td></tr>
+      <tr><td>Arroz blanco</td><td>1006.30</td><td>Capítulo 10: cereales</td></tr>
+      <tr><td>Miel natural</td><td>0409.00</td><td>Capítulo 04: lácteos, huevos y miel</td></tr>
+      <tr><td>Queso fresco</td><td>0406.10</td><td>Capítulo 04: lácteos, huevos y miel</td></tr>
+    </table></div>
+    <p class="foot">Verifiquen siempre el código de su producto exacto en la fuente; un producto procesado puede estar en otro capítulo que su materia prima.</p>
+  </div>
+
+  <h3>Lo que su equipo debe llenar hoy</h3>
+  <div class="scroll"><table>
+    <tr><th>Dato del rubro</th><th>Hallazgo</th><th>Fuente</th></tr>
+    <tr><td>Productos típicos y presentaciones</td><td></td><td></td></tr>
+    <tr><td>Código arancelario del producto principal</td><td></td><td></td></tr>
+    <tr><td>Exportaciones e importaciones (últimos 3 años)</td><td></td><td></td></tr>
+    <tr><td>3 a 5 competidores conocidos y sus precios</td><td></td><td></td></tr>
+    <tr><td>Registros y permisos que exige el rubro</td><td></td><td></td></tr>
+    <tr><td>Principales problemas del rubro en Nicaragua</td><td></td><td></td></tr>
+  </table></div>
+  <div class="box idea">
+    <b>Reglas de la búsqueda</b>
+    <ul>
+      <li>Cada dato lleva su fuente con enlace y fecha. Sin fuente, no cuenta.</li>
+      <li>Prefieran fuentes oficiales a blogs o artículos sin autor.</li>
+      <li>Si una herramienta de inteligencia artificial les da un dato, búsquenlo en la fuente original antes de usarlo.</li>
+      <li>Cierren con 5 preguntas para la empresa que salieron de esta investigación.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ BLOQUE 5 ============ -->
+<section role="tabpanel" id="b5">
+  <div class="kicker">Bloque 5 · Refrescamiento · 40 minutos</div>
+  <h1>Entrevista de campo</h1>
+  <p class="lead">En la visita, la calidad de los datos depende de cómo pregunten. Una buena entrevista se siente como una conversación ordenada, no como un interrogatorio.</p>
+
+  <h3>El orden: de lo general a lo específico</h3>
+  <div class="box">
+    <svg viewBox="0 0 900 300" class="chain" role="img" aria-label="Embudo de la entrevista: historia, producto, proceso, comercialización, costos y ventas">
+      <g font-size="17" text-anchor="middle" font-weight="700">
+        <polygon points="40,10 860,10 800,62 100,62" fill="var(--green)"/><text x="450" y="43" fill="#fff">Historia del negocio y modelo (propio o maquila)</text>
+        <polygon points="104,68 796,68 736,120 164,120" fill="#2F7752"/><text x="450" y="101" fill="#fff">Producto y marca</text>
+        <polygon points="168,126 732,126 672,178 228,178" fill="#4A9468"/><text x="450" y="159" fill="#fff">Proceso, equipos y personal</text>
+        <polygon points="232,184 668,184 608,236 292,236" fill="var(--maize)"/><text x="450" y="217" fill="#1C2A22">Comercialización y clientes</text>
+        <polygon points="296,242 604,242 560,292 340,292" fill="var(--soil)"/><text x="450" y="274" fill="#fff">Costos y ventas</text>
+      </g>
+    </svg>
+    <p class="foot">Los temas sensibles, como costos y ventas, van al final, cuando ya hay confianza.</p>
+  </div>
+
+  <h3>Mejoren estas preguntas</h3>
+  <p>Lean la pregunta en rojo y decidan qué tiene de malo antes de ver la versión mejorada.</p>
+  <div id="qas"></div>
+
+  <h3>Nueve reglas para la visita</h3>
+  <ol>
+    <li>Preséntense, expliquen para qué es la visita y pidan permiso antes de grabar o tomar fotos.</li>
+    <li>Empiecen por la historia del negocio: genera confianza.</li>
+    <li>Vayan de lo general a lo específico. Costos y ventas, al final.</li>
+    <li>Una pregunta a la vez y sin sugerir la respuesta.</li>
+    <li>Si la respuesta es vaga, repregunten: "¿Me puede dar un ejemplo?" o "¿Más o menos cuánto?".</li>
+    <li>Si no saben el dato exacto, acepten un rango y anótenlo como rango.</li>
+    <li>Pidan documentos: lista de precios, etiqueta, facturas, registros.</li>
+    <li>No prometan apoyos, compras ni financiamiento.</li>
+    <li>Cierren agradeciendo y avisando cómo los contactarán si les falta algo.</li>
+  </ol>
+
+  <h3>Roles del equipo</h3>
+  <div class="grid3">
+    <div class="box idea"><b>Entrevistador</b><p>Conduce la conversación con un informante y sigue la guía.</p></div>
+    <div class="box idea"><b>Anotador</b><p>Escribe las respuestas con las palabras del informante, no con las suyas.</p></div>
+    <div class="box idea"><b>Responsable de tablas</b><p>Llena las tablas con números o rangos y pregunta lo que falte.</p></div>
+    <div class="box idea"><b>Registro visual</b><p>Toma fotos por etapa, con permiso, y observa el espacio.</p></div>
+    <div class="box idea"><b>Coordinador</b><p>Cuida el tiempo y que se cubran todos los módulos.</p></div>
+  </div>
+  <p class="foot">En equipos pequeños, una persona puede tener dos roles, pero nunca entrevistar y anotar a la vez.</p>
+</section>
+
+<!-- ============ BLOQUE 6 ============ -->
+<section role="tabpanel" id="b6">
+  <div class="kicker">Bloque 6 · 75 minutos</div>
+  <h1>Adaptar la guía de visita a su rubro</h1>
+  <p class="lead">Habrá una sola visita de unas 3 horas y tiene que levantar toda la información. La guía la redactan ustedes, con las preguntas que salieron del caso y de la investigación del rubro.</p>
+
+  <h3>Repartan la visita por informante</h3>
+  <div class="scroll"><table>
+    <tr><th>Informante</th><th>Módulos</th><th>Responsable del equipo</th></tr>
+    <tr><td>Dueño o gerente</td><td>A, B, H, J, K</td><td></td></tr>
+    <tr><td>Encargado de producción</td><td>C, D, E, F</td><td></td></tr>
+    <tr><td>Ventas o administración</td><td>G, H, I y tablas de costos</td><td></td></tr>
+    <tr><td>Observación y registro</td><td>Lista de observación</td><td></td></tr>
+  </table></div>
+  <p>Si una sola persona responde todo, ordenen la entrevista por módulos y repartan quién pregunta y quién llena tablas.</p>
+
+  <h3>Los 11 módulos</h3>
+  <details><summary>A. Historia y modelo de negocio</summary><p>Año de inicio, cómo nació, si produce para sí, da servicio de maquila o ambos, y qué parte del negocio es cada uno.</p></details>
+  <details><summary>B. Formalización y normativa</summary><p>Registros y permisos (tabla T10), inspecciones recibidas, certificaciones, si ha exportado o lo ha intentado.</p></details>
+  <details><summary>C. Materia prima e insumos</summary><p>Qué compra, a quién, de dónde, cómo paga, criterios de calidad al recibir, problemas de abastecimiento (tablas T1 y T9).</p></details>
+  <details><summary>D. Proceso de transformación</summary><p>Cada etapa en orden, con tiempo, equipo, personal, capacidad y merma; puntos de control de calidad (tabla T2).</p></details>
+  <details><summary>E. Recursos productivos</summary><p>Equipos, infraestructura y personal (tablas T3 y T4); capacidad instalada contra capacidad usada y por qué hay diferencia.</p></details>
+  <details><summary>F. Desperdicios y subproductos</summary><p>Qué sale del proceso, cuánto, qué se vende y qué se bota. Pregunten por separado desperdicio y subproducto (tabla T7).</p></details>
+  <details><summary>G. Producto, marca y empaque</summary><p>Presentaciones, vida útil, empaque y su proveedor, información de la etiqueta, marca registrada, código de barras.</p></details>
+  <details><summary>H. Comercialización y clientes</summary><p>Tipos de cliente, canales, condiciones de pago, cómo fija precios, a quién considera su competencia, cómo llega el producto al cliente (tablas T5 y T6).</p></details>
+  <details><summary>I. Mercado digital</summary><p>Redes que usa, quién las maneja, frecuencia de publicación, si vende por redes o WhatsApp y qué parte de sus ventas representa.</p></details>
+  <details><summary>J. Costos y finanzas</summary><p>Costos fijos y variables (tablas T1, T4 y T8), inversiones realizadas, fuentes de financiamiento usadas.</p></details>
+  <details><summary>K. Retos, riesgos y planes</summary><p>Problemas principales, riesgos (clima, plagas, precios, regulación), planes a 1 y 3 años, alianzas que le interesarían.</p></details>
+
+  <h3>Las 10 tablas obligatorias</h3>
+  <p>Todo número va a una tabla. Imprímanlas con al menos 10 filas y lleven una hoja de notas para lo que no quepa.</p>
+  <div class="scroll"><table>
+    <tr><th>Tabla</th><th>Qué registra</th></tr>
+    <tr><td>T1. Materia prima e insumos</td><td>Insumo, proveedor, origen, unidad, cantidad al mes, precio, forma de pago, meses de escasez</td></tr>
+    <tr><td>T2. Proceso por etapa</td><td>Etapa, equipo, personas, tiempo por lote, cantidad que entra y sale, merma, control de calidad</td></tr>
+    <tr><td>T3. Equipos e infraestructura</td><td>Cantidad, capacidad, año de compra, valor, vida útil, estado, mantenimiento</td></tr>
+    <tr><td>T4. Personal</td><td>Puesto, número, permanente o temporal, meses que trabaja, forma de pago, monto, área</td></tr>
+    <tr><td>T5. Producción y ventas por producto</td><td>Producción y ventas al mes, precios mayorista, detalle y en línea, vida útil</td></tr>
+    <tr><td>T6. Canales y clientes</td><td>Canal, % de ventas, clientes, condiciones de pago, transporte, comisiones</td></tr>
+    <tr><td>T7. Desperdicios y subproductos</td><td>Material, cantidad, si se vende o se bota, precio, destino</td></tr>
+    <tr><td>T8. Costos fijos mensuales</td><td>Alquiler, energía, agua, comunicaciones, salarios administrativos, mantenimiento, permisos, publicidad</td></tr>
+    <tr><td>T9. Estacionalidad del año</td><td>Disponibilidad y precio de materia prima, producción y ventas, mes a mes</td></tr>
+    <tr><td>T10. Formalización y permisos</td><td>RUC, alcaldía, registro y licencia sanitaria, marca, código de barras, certificaciones</td></tr>
+  </table></div>
+
+  <h3>Revisión cruzada</h3>
+  <p>Cada equipo revisa la guía de otro equipo y marca lo que sí cumple.</p>
+  <div class="box">
+    <ul class="check" id="revcheck">
+      <li><label><input type="checkbox"> Están los 11 módulos y las 10 tablas.</label></li>
+      <li><label><input type="checkbox"> No hay preguntas dobles ni preguntas que traen la respuesta.</label></li>
+      <li><label><input type="checkbox"> Se pregunta el modelo de negocio antes de suponerlo.</label></li>
+      <li><label><input type="checkbox"> Desperdicio y subproducto se preguntan por separado.</label></li>
+      <li><label><input type="checkbox"> Ningún número se pide como pregunta abierta; todos van a una tabla.</label></li>
+      <li><label><input type="checkbox"> Están las preguntas que salieron del caso modelo y de la investigación del rubro.</label></li>
+      <li><label><input type="checkbox"> La guía está repartida por informante y cabe en 3 horas.</label></li>
+    </ul>
+    <p class="counter" id="revcount">0 de 7 criterios</p>
+  </div>
+</section>
+
+<!-- ============ BLOQUE 7 ============ -->
+<section role="tabpanel" id="b7">
+  <div class="kicker">Bloque 7 · 40 minutos</div>
+  <h1>Simulacro de visita</h1>
+  <p class="lead">Antes de ir a la empresa real, prueben su guía. Un equipo hace de empresa con los datos de Lácteos El Roble y el otro aplica su guía. Luego cambian.</p>
+
+  <div class="box" style="text-align:center">
+    <div class="timer" id="tm">15:00</div>
+    <p><button class="btn" id="tgo">Iniciar</button> <button class="btn ghost" id="tps">Pausar</button> <button class="btn ghost" id="trs">Reiniciar</button></p>
+    <p class="foot">15 minutos por ronda.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="box idea"><b>El equipo que hace de empresa</b><p>Responde solo con los datos del caso. Si le preguntan algo que el caso no dice, contesta "no sé" o da un rango razonable. No ayuda al entrevistador.</p></div>
+    <div class="box idea"><b>El equipo que entrevista</b><p>Aplica su guía como en la visita real: con roles, en orden y llenando las tablas.</p></div>
+  </div>
+
+  <h3>Al terminar, anoten</h3>
+  <ul>
+    <li>Qué preguntas no se entendieron o hubo que repetir.</li>
+    <li>Qué tablas costaron llenar y por qué.</li>
+    <li>Cuánto tiempo tomó cada módulo y si la guía cabe en 3 horas.</li>
+    <li>Qué van a corregir antes de la visita real.</li>
+  </ul>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  // ---- tabs
+  var tabs=document.querySelectorAll('nav [role=tab]');
+  function show(id){
+    tabs.forEach(function(b){b.setAttribute('aria-selected', b.dataset.t===id?'true':'false');});
+    document.querySelectorAll('[role=tabpanel]').forEach(function(s){s.classList.toggle('on', s.id===id);});
+    window.scrollTo(0,0);
+    try{localStorage.setItem('s8tab',id);}catch(e){}
+  }
+  tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.t);});});
+  try{var last=localStorage.getItem('s8tab'); if(last && document.getElementById(last)) show(last);}catch(e){}
+
+  var NS='http://www.w3.org/2000/svg';
+  function el(tag,attrs,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e;}
+  function fmt(n){return Math.round(n).toLocaleString('es-NI');}
+
+  // ---- checklists
+  function counter(listId,outId,total,label){
+    var l=document.getElementById(listId),o=document.getElementById(outId);
+    function upd(){var n=l.querySelectorAll('input:checked').length;o.textContent=n+' de '+total+' '+label;}
+    l.addEventListener('change',upd);upd();
+  }
+  counter('msgcheck','msgcount',5,'elementos');
+  counter('revcheck','revcount',7,'criterios');
+
+  // ---- chain diagram
+  var links=['Insumos','Producción primaria','Acopio','Transformación','Distribución','Consumidor'];
+  var g=document.getElementById('links');
+  var w=140,gap=24,x0=12;
+  links.forEach(function(t,i){
+    var x=x0+i*(w+gap);
+    g.appendChild(el('rect',{x:x,y:40,width:w,height:84,rx:10,fill:i===3?'var(--green)':'var(--green-soft)',stroke:'var(--green)'}));
+    var words=t.split(' ');
+    words.forEach(function(wd,j){
+      g.appendChild(el('text',{x:x+w/2,y:87+(j-(words.length-1)/2)*20,fill:i===3?'#fff':'var(--ink)','font-weight':'700','font-size':'16'},wd));
+    });
+    if(i<links.length-1) g.appendChild(el('line',{x1:x+w+2,y1:82,x2:x+w+gap-4,y2:82,stroke:'currentColor','stroke-width':2.5,'marker-end':'url(#ar)'}));
+    g.appendChild(el('line',{x1:x+w/2,y1:126,x2:x+w/2,y2:172,stroke:'var(--maize)','stroke-width':2,'stroke-dasharray':'5 4'}));
+  });
+
+  // ---- value added chart (coffee, USD per lb, illustrative)
+  var va=[['Productor',0,2.5],['Beneficio y exportador',2.5,3.5],['Tostador',3.5,9],['Cafetería',9,30]];
+  var svg=document.getElementById('vachart');
+  var L=150,B=290,H=250,max=30,bw=120,step=(900-L-40)/va.length;
+  for(var t=0;t<=30;t+=10){var y=B-t/max*H;svg.appendChild(el('line',{x1:L-10,x2:880,y1:y,y2:y,stroke:'var(--line)'}));svg.appendChild(el('text',{x:L-18,y:y+5,'text-anchor':'end',fill:'var(--muted)','font-size':14},'$'+t));}
+  svg.appendChild(el('text',{x:20,y:20,fill:'var(--muted)','font-size':14},'USD por libra'));
+  va.forEach(function(d,i){
+    var x=L+i*step+(step-bw)/2,base=d[1],top=d[2];
+    if(base>0) svg.appendChild(el('rect',{x:x,y:B-base/max*H,width:bw,height:base/max*H,fill:'var(--line)'}));
+    svg.appendChild(el('rect',{x:x,y:B-top/max*H,width:bw,height:(top-base)/max*H,fill:'var(--green)'}));
+    svg.appendChild(el('text',{x:x+bw/2,y:B-top/max*H-26,'text-anchor':'middle','font-weight':'700',fill:'var(--ink)','font-size':15},'Vende a $'+top.toFixed(2)));
+    svg.appendChild(el('text',{x:x+bw/2,y:B-top/max*H-8,'text-anchor':'middle',fill:'var(--green)','font-size':14,'font-weight':'700'},'agrega $'+(top-base).toFixed(2)));
+    svg.appendChild(el('text',{x:x+bw/2,y:B+22,'text-anchor':'middle',fill:'var(--ink)','font-size':15},d[0]));
+  });
+
+  // ---- bottleneck
+  var stages=[['Amasado',200],['Formado',150],['Horneado',120],['Empaque',250]];
+  var bw2=document.getElementById('bneck');
+  stages.forEach(function(s,i){
+    var d=document.createElement('div');d.className='ctrl';
+    d.innerHTML='<label for="bn'+i+'">'+s[0]+' (rosquillas por hora)</label><input id="bn'+i+'" type="range" min="50" max="300" step="10" value="'+s[1]+'"><output id="bo'+i+'"></output>';
+    bw2.appendChild(d);
+  });
+  function drawBn(){
+    var vals=stages.map(function(s,i){return +document.getElementById('bn'+i).value;});
+    var mn=Math.min.apply(null,vals),idx=vals.indexOf(mn);
+    var c=document.getElementById('bnchart');c.innerHTML='';
+    var bwid=170,gp=40,x0=40;
+    vals.forEach(function(v,i){
+      document.getElementById('bo'+i).textContent=v;
+      var h=v/300*150,x=x0+i*(bwid+gp);
+      c.appendChild(el('rect',{x:x,y:170-h,width:bwid,height:h,rx:6,fill:i===idx?'var(--maize)':'var(--green-soft)',stroke:i===idx?'var(--maize)':'var(--green)'}));
+      c.appendChild(el('text',{x:x+bwid/2,y:165-h,'text-anchor':'middle','font-weight':'700',fill:'var(--ink)','font-size':15},v));
+      c.appendChild(el('text',{x:x+bwid/2,y:192,'text-anchor':'middle',fill:'var(--ink)','font-size':15},stages[i][0]));
+    });
+    var y=170-mn/300*150;
+    c.appendChild(el('line',{x1:30,x2:880,y1:y,y2:y,stroke:'var(--bad)','stroke-width':2,'stroke-dasharray':'6 5'}));
+    document.getElementById('bnres').textContent='La fábrica produce '+mn+' rosquillas por hora. El cuello de botella es: '+stages[idx][0].toLowerCase()+'.';
+  }
+  stages.forEach(function(s,i){document.getElementById('bn'+i).addEventListener('input',drawBn);});
+  drawBn();
+
+  // ---- sort game
+  var items=[['Plátano verde','V'],['Aceite para freír','V'],['Bolsas impresas','V'],['Sal y condimentos','V'],['Gas para la freidora','V'],['Alquiler del local','F'],['Salario mensual de la administradora','F'],['Depreciación de la freidora','F'],['Internet y teléfono','F'],['Permiso municipal anual','F']];
+  var chips=document.getElementById('chips');
+  items.sort(function(){return Math.random()-.5;}).forEach(function(it){
+    var b=document.createElement('button');b.className='chip';b.textContent=it[0];b.dataset.ans=it[1];b.dataset.state='';
+    b.addEventListener('click',function(){b.classList.remove('ok','no');b.dataset.state=b.dataset.state===''?'F':(b.dataset.state==='F'?'V':'');b.setAttribute('aria-label',it[0]+(b.dataset.state==='F'?', fijo':b.dataset.state==='V'?', variable':', sin clasificar'));});
+    chips.appendChild(b);
+  });
+  document.getElementById('chk').addEventListener('click',function(){
+    var ok=0,blank=0;chips.querySelectorAll('.chip').forEach(function(b){
+      b.classList.remove('ok','no');
+      if(!b.dataset.state){blank++;return;}
+      if(b.dataset.state===b.dataset.ans){ok++;b.classList.add('ok');}else b.classList.add('no');
+    });
+    document.getElementById('chipres').textContent=ok+' de '+items.length+' correctos'+(blank?' · faltan '+blank+' por clasificar':'')+'.';
+  });
+  document.getElementById('rst').addEventListener('click',function(){chips.querySelectorAll('.chip').forEach(function(b){b.dataset.state='';b.classList.remove('ok','no');});document.getElementById('chipres').textContent='';});
+
+  // ---- break-even
+  function drawPe(){
+    var F=+pF.value,P=+pP.value,V=+pV.value;
+    oF.textContent='C$'+fmt(F);oP.textContent='C$'+P;oV.textContent='C$'+V;
+    var c=document.getElementById('pechart');c.innerHTML='';
+    var L=90,R=870,T=20,Bt=330,mc=P-V,pe=mc>0?F/mc:null;
+    var xmax=pe?Math.max(500,Math.ceil(pe*2/250)*250):2000;
+    var ymax=Math.max(P*xmax,F+V*xmax)*1.05;
+    function X(u){return L+u/xmax*(R-L);} function Y(v){return Bt-v/ymax*(Bt-T);}
+    for(var i=0;i<=4;i++){var v=ymax*i/4;c.appendChild(el('line',{x1:L,x2:R,y1:Y(v),y2:Y(v),stroke:'var(--line)'}));c.appendChild(el('text',{x:L-8,y:Y(v)+5,'text-anchor':'end','font-size':13,fill:'var(--muted)'},'C$'+fmt(v/1000)+' mil'));}
+    for(var j=0;j<=4;j++){var u=xmax*j/4;c.appendChild(el('text',{x:X(u),y:Bt+22,'text-anchor':'middle','font-size':13,fill:'var(--muted)'},fmt(u)));}
+    c.appendChild(el('text',{x:(L+R)/2,y:Bt+44,'text-anchor':'middle','font-size':14,fill:'var(--muted)'},'Bolsas vendidas al mes'));
+    c.appendChild(el('line',{x1:X(0),y1:Y(F),x2:X(xmax),y2:Y(F+V*xmax),stroke:'var(--soil)','stroke-width':3.5}));
+    c.appendChild(el('line',{x1:X(0),y1:Y(0),x2:X(xmax),y2:Y(P*xmax),stroke:'var(--green)','stroke-width':3.5}));
+    c.appendChild(el('line',{x1:X(0),y1:Y(F),x2:X(xmax),y2:Y(F),stroke:'var(--soil)','stroke-width':1.5,'stroke-dasharray':'5 5'}));
+    c.appendChild(el('text',{x:X(xmax)-4,y:Y(F)-8,'text-anchor':'end','font-size':13,fill:'var(--soil)'},'Costos fijos'));
+    var r=document.getElementById('peres');
+    if(pe){
+      c.appendChild(el('line',{x1:X(pe),x2:X(pe),y1:Y(P*pe),y2:Bt,stroke:'var(--maize)','stroke-width':2,'stroke-dasharray':'5 4'}));
+      c.appendChild(el('circle',{cx:X(pe),cy:Y(P*pe),r:8,fill:'var(--maize)',stroke:'var(--panel)','stroke-width':2}));
+      c.appendChild(el('text',{x:X(pe)+12,y:Y(P*pe)+24,'font-size':14,'font-weight':'700',fill:'var(--ink)'},'Equilibrio: '+fmt(Math.ceil(pe))+' bolsas'));
+      c.appendChild(el('text',{x:X(pe*0.45),y:Bt-12,'text-anchor':'middle','font-size':13,fill:'var(--bad)'},'pérdida'));
+      c.appendChild(el('text',{x:X(Math.min(xmax*0.85,pe*1.6)),y:Y(P*xmax*0.55)-30,'text-anchor':'middle','font-size':13,fill:'var(--good)'},'ganancia'));
+      r.className='result';
+      r.textContent='Cada bolsa deja C$'+mc+' de margen. Hay que vender '+fmt(Math.ceil(pe))+' bolsas al mes para cubrir C$'+fmt(F)+' de costos fijos.';
+    } else {
+      r.className='result warn';
+      r.textContent='Con estos números nunca se llega al equilibrio: cada bolsa cuesta más de lo que se cobra.';
+    }
+  }
+  var pF=document.getElementById('pF'),pP=document.getElementById('pP'),pV=document.getElementById('pV');
+  var oF=document.getElementById('oF'),oP=document.getElementById('oP'),oV=document.getElementById('oV');
+  [pF,pP,pV].forEach(function(i){i.addEventListener('input',drawPe);});drawPe();
+
+  // ---- question improver
+  var qs=[
+    ['¿Cuánto venden y a qué precio?','¿Cuántas unidades venden en un mes normal? ¿Y a qué precio vende cada presentación?','Pregunta doble: pide dos datos a la vez y el informante responde solo uno.'],
+    ['¿Verdad que el mayor problema es el precio de la materia prima?','¿Cuáles son los principales problemas que enfrenta el negocio?','Sugiere la respuesta: el informante tiende a decir que sí.'],
+    ['¿Cuánto ganan al mes?','¿Cuáles son sus principales costos? (y se llena la tabla T1 y T8)','Demasiado sensible y abierto al inicio. Mejor reconstruir con costos y ventas en tablas.'],
+    ['¿Su proceso es eficiente?','¿Puede contarme paso a paso qué pasa desde que llega la materia prima hasta que sale el producto?','Pide una opinión vaga. Es mejor pedir una descripción concreta.'],
+    ['¿Cuánta materia prima compran?','¿Cuánta materia prima compran en un mes normal? ¿Y en el mes de más producción?','Falta la unidad de tiempo y no considera la estacionalidad.']
+  ];
+  var qbox=document.getElementById('qas');
+  qs.forEach(function(q){
+    var d=document.createElement('div');d.className='qa';
+    d.innerHTML='<div class="bad">✗ '+q[0]+'</div><button class="btn ghost">Ver versión mejorada</button><div class="good">✓ '+q[1]+'<div class="why">'+q[2]+'</div></div>';
+    var b=d.querySelector('button');
+    b.addEventListener('click',function(){var o=d.classList.toggle('open');b.textContent=o?'Ocultar':'Ver versión mejorada';});
+    qbox.appendChild(d);
+  });
+
+  // ---- timer
+  var total=15*60,left=total,iv=null,tm=document.getElementById('tm');
+  function paint(){var m=Math.floor(left/60),s=left%60;tm.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;tm.classList.toggle('end',left<=60);}
+  document.getElementById('tgo').addEventListener('click',function(){if(iv)return;iv=setInterval(function(){if(left>0){left--;paint();}else{clearInterval(iv);iv=null;}},1000);});
+  document.getElementById('tps').addEventListener('click',function(){clearInterval(iv);iv=null;});
+  document.getElementById('trs').addEventListener('click',function(){clearInterval(iv);iv=null;left=total;paint();});
+  paint();
+})();
+</script>
+</body>
+</html>
